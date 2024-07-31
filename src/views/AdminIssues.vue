@@ -67,7 +67,7 @@ onMounted(() => {
         </tr>
       </template>
 
-        <template v-slot:item.actions="{ item }">
+        <template v-slot:[`item.actions`]="{ item }">
 
           <v-icon size="small" @click="() => { 
             currentItemId = item.id

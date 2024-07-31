@@ -62,9 +62,9 @@ const login = () =>{
 
           <br>
 
-          <button @click="router.push('/signup')">
+          <!-- <button @click="router.push('/signup')">
             <p class="signup-link">Nie masz jeszcze konta? Zarejestruj się</p>
-          </button>
+          </button> -->
       </v-card>
   </div>
 

@@ -8,6 +8,10 @@
               <h3>Witaj w SzybkiBooking!<br></h3>
               <p>Tutaj możesz przeglądać i rezerwować sale do różnych celów edukacyjnych i spotkań. Nasza platforma jest prosta w obsłudze, zapewniając szybkie i wygodne dokonywanie rezerwacji online.<br></p>
               <p style="font-size: 1.2rem;"><br> Dziękujemy za korzystanie z naszego systemu!</p>
+              <br>
+              <h4><i>Główne konto administratora:</i></h4>
+              <p style="font-size: 1.2rem;"><i>Login: admin@gmail.com</i></p>
+              <p style="font-size: 1.2rem;"><i>Hasło: Password123</i></p>
               <router-link to="classes">
                 <v-btn color="primary" variant="outlined" class="classes-btn">Przeglądaj dostępne sale<i class="pi pi-arrow-right"></i></v-btn>
               </router-link>
@@ -27,10 +31,10 @@
       </v-container>
     </div>
   </template>
-  
+
   <style scoped>
 
-    h3 {
+    h3, h4 {
       font-weight: 400;
     }
 

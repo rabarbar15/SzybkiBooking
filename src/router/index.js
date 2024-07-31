@@ -13,7 +13,6 @@ import Signup from '../components/Signup.vue';
 import { getCurrentUser } from '../../data/database';
 import NewClass from '../views/NewClass.vue';
 import AdminReservations from '../views/AdminReservations.vue';
-import TableTest from '../views/TableTest.vue';
 import AdminIssues from '../views/AdminIssues.vue';
 
 const routes = [
@@ -79,11 +78,6 @@ const routes = [
       name: 'admin-issues',
       component: AdminIssues,
       meta: {requiresAuth: true},
-    },
-    {
-      path: '/table-test',
-      name: 'table-test',
-      component: TableTest,
     },
     {
       path: '/login',

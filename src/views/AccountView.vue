@@ -187,7 +187,7 @@ onMounted(() => {
         variant="text"
         @click="snackbar = false"
       >
-        Close
+        Zamknij
       </v-btn>
     </template>
   </v-snackbar>

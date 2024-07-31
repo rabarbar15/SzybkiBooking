@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import AdminSidebar from '../components/AdminSidebar.vue';
 import { addNewRoom } from '../../data/database';
@@ -174,7 +174,7 @@ const handleSubmit = () => {
             variant="text"
             @click="snackbar = false"
         >
-            Close
+            Zamknij
         </v-btn>
         </template>
     </v-snackbar>

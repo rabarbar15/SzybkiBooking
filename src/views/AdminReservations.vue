@@ -28,7 +28,6 @@ const fetchReservations = () => {
       Object.entries(data).forEach(roomData => {
         const newRoomObject = { 'id': roomData[0], ...roomData[1]}
         reservations.value.push(newRoomObject)
-        // console.log(newRoomObject);
       })
     })
     .catch(err => {
@@ -78,7 +77,7 @@ onMounted(() => {
         :headers="headers"
       >
 
-        <template v-slot:item.status="{ item }">
+        <template v-slot:[`item.status`]="{ item }">
           <div>
             <v-chip
               :color="item.status == 'PENDING' ? 'red' : 'green'"
@@ -90,7 +89,7 @@ onMounted(() => {
           </div>
         </template>
 
-        <template v-slot:item.actions="{ item }">
+        <template v-slot:[`item.actions`]="{ item }">
 
           <v-btn color="success" class="success-btn" @click="() => {
             currentItemId = item.id

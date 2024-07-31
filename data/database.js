@@ -1,6 +1,4 @@
 import { getDatabase, ref, set, onValue, update, push, remove } from "firebase/database";
-import roomsFile from "./rooms.json";
-import scheduleFile from "./schedule.json";
 import detailsFile from "./details.json";
 import { deleteUser, getAuth, onAuthStateChanged, reauthenticateWithCredential, updatePassword } from "firebase/auth";
 import { EmailAuthProvider } from "firebase/auth/web-extension";
@@ -19,9 +17,6 @@ export function importDataFromFiles() {
     //   set(newRoomDetailsRef, roomDetails)
     // })
 
-    // set(push(ref(db, 'rooms')), roomsFile);
-    // set(ref(db, 'schedule'), scheduleFile);
-    // set(ref(db, 'details'), detailsFile);
 }
 
 export function retrieveAllRoomsDetails() {
