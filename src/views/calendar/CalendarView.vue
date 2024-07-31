@@ -7,8 +7,7 @@ import interactionPlugin from '@fullcalendar/interaction'
 import DialogModal from './DialogModal.vue'
 import { ref } from 'vue'
 import { getEvents } from '../../../data/calendarEvents'
-import { addReservation, getNewReservationsLastIndex, retrieveRoomDataByNumber } from '../../../data/database'
-
+import { addReservation } from '../../../data/database'
 
 export default {
     components: {
@@ -87,8 +86,6 @@ export default {
 
             calendarApi.unselect() 
 
-            const title = `${this.formData.course} - ${this.formData.firstName} ${this.formData.lastName}`;
-
             const event = {
                 id: this.createEventId(),
                 title: 'Rezerwacja oczekująca na zatwierdzenie',
@@ -100,7 +97,6 @@ export default {
 
             calendarApi.addEvent(event)
 
-            // const lastIndex = await getNewReservationsLastIndex()
             const reservation = {
               date: arg.startStr.split('T')[0],
               start: arg.startStr.split('T')[1].substring(0, 5),
@@ -112,23 +108,19 @@ export default {
             }
 
             addReservation(reservation)
-
-            console.log(reservation);
-
         },
 
         handleEvents(events) {
             this.currentEvents = events
-            const calendarApi = this.$refs.calendarRef.getApi();
         },
 
         updateDialogState() {
             this.parentState = !this.parentState;
-            console.log(this.parentState)
+            // console.log(this.parentState)
         },
 
         handleSubmition(args) {
-            console.log(args)
+            // console.log(args)
             this.formData = args
             this.updateDialogState()
             this.performAddEvent(this.tmpArg)
@@ -165,13 +157,6 @@ export default {
         try {
             const events = getEvents(this.roomNumber);
             
-            if (events instanceof Promise) {
-                const resolvedEvents = await events;
-                this.loadEvents(resolvedEvents)
-                console.log("Todo", resolvedEvents);
-            } else {
-                console.log("Todo", events);
-            }
         } catch (error) {
             console.error("Error fetching events:", error);
         }
@@ -191,7 +176,6 @@ export default {
             <FullCalendar class="calendar-content" :options="calendarOptions" ref="calendarRef"/>
         </div>
 
-        <!-- <button @click="updateDialogState">Update State</button> -->
         <DialogModal :childProp="parentState" v-on:changeDialogValue="updateDialogState" v-on:form-submitted="handleSubmition"/>
         
     </div>

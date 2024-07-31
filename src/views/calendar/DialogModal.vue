@@ -52,7 +52,6 @@
 
   const firstName = ref('');
   const lastName = ref('');
-  // const email = ref('');
   const course = ref('');
 
   const submitForm = () => {
@@ -65,7 +64,6 @@
     console.log('Submitting form...');
     console.log('First Name:', firstName.value);
     console.log('Last Name:', lastName.value);
-    // console.log('Email:', email.value);
     console.log('Course:', course.value);
 
     const formData = { firstName: firstName.value, lastName: lastName.value, course: course.value };
@@ -73,6 +71,10 @@
     emit('formSubmitted', formData);
 
     dialog.value = false;
+    
+    firstName.value = ''
+    lastName.value = ''
+    course.value = ''
   };
 
 </script>

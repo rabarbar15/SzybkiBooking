@@ -21,7 +21,6 @@ const fetchIssues = () => {
       Object.entries(data).forEach(issueData => {
         const newIssueObject = { 'id': issueData[0], ...issueData[1]}
         issues.value.push(newIssueObject)
-        // console.log(newIssueObject);
 
       })
     })
@@ -31,8 +30,6 @@ const fetchIssues = () => {
 }
 
 const handleDeleteIssue = () => {
-  // console.log(currentItemId.value);
-
   removeIssue(currentItemId.value)
     .then(() => {
       fetchIssues()
@@ -163,9 +160,9 @@ h1 {
 }
 
 .title, .v-card-subtitle {
-  white-space: normal; /* Umożliwia zawijanie tekstu */
-  overflow-wrap: break-word; /* Zawija długie słowa */
-  word-wrap: break-word; /* Zawija długie słowa */
+  white-space: normal; 
+  overflow-wrap: break-word; 
+  word-wrap: break-word; 
 }
 
 

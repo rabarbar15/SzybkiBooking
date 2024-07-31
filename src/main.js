@@ -28,7 +28,13 @@ const vuetify = createVuetify({
 })  
 
 const firebaseConfig = {
-
+    apiKey: "AIzaSyBGw5FiTQdR3yrcmcsBZHoppdAjxZ8i6VI",
+    authDomain: "classreservations-10585.firebaseapp.com",
+    databaseURL: "https://classreservations-10585-default-rtdb.firebaseio.com",
+    projectId: "classreservations-10585",
+    storageBucket: "classreservations-10585.appspot.com",
+    messagingSenderId: "1034868512",
+    appId: "1:1034868512:web:7ea653b63a79d68669e945"
   };
   
 initializeApp(firebaseConfig);

@@ -9,10 +9,10 @@ import { EmailAuthProvider } from "firebase/auth/web-extension";
 export function importDataFromFiles() {
     const db = getDatabase();
 
-    // detailsFile.forEach(room => {
-    //   const newRoomRef = push(ref(db, 'rooms'));
-    //   set(newRoomRef, room);
-    // })
+    detailsFile.forEach(room => {
+      const roomRef = push(ref(db, 'rooms'));
+      set(roomRef, room);
+    })
 
     // detailsFile.forEach(roomDetails => {
     //   const newRoomDetailsRef = push(ref(db, 'details'))
@@ -46,7 +46,6 @@ export async function retrieveRoomDataByNumber(roomNumber) {
       .then((rooms) => {
         for (let key in rooms) {
           if (rooms[key].roomNumber === roomNumber) {
-            // console.log(rooms[key]);
             resolve(rooms[key])
             return
           }
@@ -100,11 +99,9 @@ export function addNewRoom(roomData) {
   return new Promise((resolve, reject) => {
     push(roomsDataRef, roomData)
       .then(() => {
-        // console.log("Reservation sent succesfully.");
         resolve("Room added succesfully.")
       })
       .catch((error) => {
-        // console.error("Error while sending a reservation: ", error);
         reject(error)
       });
   })
@@ -140,26 +137,11 @@ export function deleteRoom(roomNumber) {
   })
 }
 
-
-// export function getScheduleReservations() {
-//     const db = getDatabase();
-
-//     return new Promise((resolve, reject) => {
-//       const scheduleRef = ref(db, 'schedule');
-//       onValue(scheduleRef, (snapshot) => {
-//         const scheduleData = snapshot.val();
-//         resolve(scheduleData);
-//       }, (error) => {
-//         reject(error);
-//       });
-//     });
-//   }
-
-export function getNewReservations() {
+export function getReservations() {
     const db = getDatabase();
 
     return new Promise((resolve, reject) => {
-        const reservationsRef = ref(db, 'newReservations');
+        const reservationsRef = ref(db, 'reservations');
         onValue(reservationsRef, (snapshot) => {
             const reservationsData = snapshot.val();
             resolve(reservationsData);
@@ -171,7 +153,7 @@ export function getNewReservations() {
 
 export function getReservationById(reservationId) {
   const db = getDatabase();
-  const reservationRef = ref(db, `newReservations/${reservationId}`)
+  const reservationRef = ref(db, `reservations/${reservationId}`)
 
   return new Promise((resolve, reject) => {
     onValue(reservationRef, (snapshot) => {
@@ -193,12 +175,11 @@ export function approveReservation(reservationId) {
       .then(data => {
 
         data.status = "APPROVED"
-        updates['/newReservations/' + reservationId] = data
+        updates['/reservations/' + reservationId] = data
 
         update(ref(db), updates)
           .then(() => {
             resolve(data)
-            console.log('ero');
           })
           .catch(err => {
             reject(err)
@@ -211,7 +192,7 @@ export function removeReservation(reservationId) {
   const db = getDatabase()
 
   return new Promise((resolve, reject) => {
-    const reservationRef = ref(db, `newReservations/${reservationId}`)
+    const reservationRef = ref(db, `reservations/${reservationId}`)
 
     remove(reservationRef)
       .then(() => {
@@ -223,38 +204,33 @@ export function removeReservation(reservationId) {
   })
 }
 
-export function getNewReservationsLastIndex() {
-  return new Promise((resolve, reject) => {
-    const reservationsRef = ref(db, 'newReservations');
+// export function addReservation(reservation) {
+//     const db = getDatabase();
+//     const reservationsRef = ref(db, 'reservations');
 
-    onValue(reservationsRef, (snapshot) => {
-      const reservationsData = snapshot.val();
-      if (reservationsData) {
-        const indices = Object.keys(reservationsData).map(index => parseInt(index, 10));
-        const lastIndex = Math.max(...indices);
-        resolve(lastIndex);
-      } else {
-        resolve(null);
-      }
-    }, (error) => {
-      reject(error);
-    });
-  });
-}
+//     push(reservationsRef, reservation)
+//         .then(() => {
+//             console.log("Reservation sent succesfully.");
+//         })
+//         .catch((error) => {
+//             console.error("Error while sending a reservation: ", error);
+//         });
+// }
 
 export function addReservation(reservation) {
-    const db = getDatabase();
-    const reservationsRef = ref(db, 'newReservations');
+  const db = getDatabase();
+  const reservationRef = ref(db, 'reservations')
 
-    push(reservationsRef, reservation)
-        .then(() => {
-            console.log("Reservation sent succesfully.");
-            return 1
-        })
-        .catch((error) => {
-            console.error("Error while sending a reservation: ", error);
-            return 0
-        });
+  return new Promise((resolve, reject) => {
+    push(reservationRef, reservation)
+      .then(() => {
+        resolve("Reservation sent succesfully.")
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+
 }
 
 
@@ -275,6 +251,10 @@ export const changeUserPassword = async (currentPassword, newPassword) => {
   const auth = getAuth()
   const user = auth.currentUser;
 
+  if(user.email === "admin@gmail.com") {
+    throw new Error("Can't change main admin's password.")
+  }
+
   const credential = EmailAuthProvider.credential(user.email, currentPassword);
 
   try {
@@ -293,6 +273,10 @@ export const deleteUserAccount = async (currentPassword) => {
 
   if (!user) {
     throw new Error("No user is currently signed in.");
+  }
+
+  if(user.email === "admin@gmail.com") {
+    throw new Error("Can't delete main admin account.")
   }
 
   const credential = EmailAuthProvider.credential(user.email, currentPassword);

@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { approveReservation, getNewReservations, getReservationById, removeReservation } from '../../data/database';
+import { approveReservation, getReservations, getReservationById, removeReservation } from '../../data/database';
 import AdminSidebar from '../components/AdminSidebar.vue';
 
 const reservations = ref([])
@@ -23,23 +23,20 @@ const headers = [
 
 const fetchReservations = () => {
   reservations.value = []
-  getNewReservations()
+  getReservations()
     .then(data => {
       Object.entries(data).forEach(roomData => {
         const newRoomObject = { 'id': roomData[0], ...roomData[1]}
         reservations.value.push(newRoomObject)
-        console.log(newRoomObject);
-
+        // console.log(newRoomObject);
       })
     })
     .catch(err => {
       console.log(err);
     })
-    console.log("dduupa", reservations.value);
 }
 
 const handleDeleteReservation = () => {
-  console.log(currentItemId.value);
 
   removeReservation(currentItemId.value)
     .then(data => {

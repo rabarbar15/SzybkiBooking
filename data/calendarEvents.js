@@ -1,5 +1,4 @@
-import { getNewReservations, getScheduleReservations } from "./database";
-
+import { getReservations } from "./database";
 
 function transformReservations(reservations) {
     const newList = reservations.map(oldObject => {
@@ -73,19 +72,11 @@ function transformReservations(reservations) {
     return newList;
 }
 
-async function loadEvents(roomNumber) {
+export async function getEvents(roomNumber) {
     try {
-        const scheduleReservations = await getScheduleReservations();
-        const newReservations = await getNewReservations()
-        
-        const newReservationsValues = Object.values(newReservations)
-
-        const reservations = [...scheduleReservations, ...newReservationsValues]
-
-        // console.log("original", reservations);
-
-        // const reservations = scheduleReservations + newReservations
-        const filteredEvents = reservations.filter(reservation => reservation.roomNumber === roomNumber);
+        const reservations = await getReservations()
+        const reservationsValues = Object.values(reservations)
+        const filteredEvents = reservationsValues.filter(reservation => reservation.roomNumber === roomNumber);
         const transformedReservations = transformReservations(filteredEvents)
 
         return transformedReservations
@@ -95,19 +86,11 @@ async function loadEvents(roomNumber) {
     }
 }
 
-export async function getEvents(roomNumber) {
-    return await loadEvents(roomNumber); 
-}
-
 export async function getAllEvents() {
     try {
-        const scheduleReservations = await getScheduleReservations();
-        const newReservations = await getNewReservations()
-        
-        const newReservationsValues = Object.values(newReservations)
-
-        const reservations = [...scheduleReservations, ...newReservationsValues]
-        const transformedReservations = transformReservations(reservations)
+        const reservations = await getReservations()
+        const reservationsValues = Object.values(reservations)
+        const transformedReservations = transformReservations(reservationsValues)
 
         return transformedReservations
     } catch (error) {
