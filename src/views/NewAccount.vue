@@ -102,6 +102,7 @@ const register = () =>{
     padding: 4rem 2rem;
     text-align: center;
     min-height: 80vh;
+    margin-top: 3rem;
 }
 
 .container h1 {

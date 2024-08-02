@@ -127,6 +127,7 @@ export default {
 
 .container {
     padding: 0 2rem;
+    margin: 4rem;
 }
 
 .panel {

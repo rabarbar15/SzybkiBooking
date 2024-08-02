@@ -2,7 +2,9 @@
     <div class="container">
 
         <v-card class="list">
-            <v-card-title>Lista dostępnych sal</v-card-title>
+            <v-card-title><h2>Lista dostępnych sal </h2></v-card-title>
+            <v-btn @click="router.push('/new-class')" color="success" style="margin: 0 0 1rem 0;">Dodaj nową</v-btn>
+
             <v-divider></v-divider>
             <v-virtual-scroll
                 :items="rooms"
@@ -35,7 +37,6 @@
             <AdminSidebar />
         </v-card>
 
-        <v-btn @click="router.push('/new-class')" color="success" style="margin-top: 1rem;">Dodaj nową salę</v-btn>
     </div>
   </template>
 
@@ -73,6 +74,12 @@ onMounted(() => {
 .container {
     padding: 0 2rem;
     text-align: center;
+    margin: 4rem 3rem;
+    min-height: 60vh;
+}
+
+h2 {
+    font-weight: 400;
 }
 
 .container h1 {

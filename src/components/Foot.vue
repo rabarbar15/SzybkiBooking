@@ -1,3 +1,9 @@
+<script setup>
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
+</script>
+
 <template>
     <v-footer class="footer bg-indigo-lighten-1 text-center d-flex flex-column">
         <v-row style="width: 100%;">
@@ -13,11 +19,10 @@
             </v-col>
 
             <v-col cols="3" class="nav">
-                <!-- <h3>hello</h3> -->
                 <ul>
-                    <li><a href="">HOME</a></li>
-                    <li><a href="">SALE</a></li>
-                    <li><a href="">PANEL ADMINA</a></li>
+                    <li><a @click="router.push('/')">HOME</a></li>
+                    <li><a @click="router.push('/classes')">SALE</a></li>
+                    <li><a @click="router.push('/admin-panel')">PANEL ADMINA</a></li>
                 </ul>
             </v-col>
 
@@ -29,15 +34,10 @@
     </v-footer>
 </template>
 
-<script>
-
-</script>
-
 <style scoped>
 
   .footer {
     padding: 4rem 25px 2rem 4rem;
-
   }
 
   .links {
@@ -75,6 +75,7 @@
     text-decoration: none;
     color: white;
     font-weight: 500;
+    cursor: pointer;
   }
 
   .copyright {

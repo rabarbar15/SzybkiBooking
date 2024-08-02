@@ -15,7 +15,7 @@
 
 <style scoped>
 .container {
-  margin: 2rem;
+
   font-family: "Quicksand", sans-serif;
 }
 </style>

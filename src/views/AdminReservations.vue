@@ -137,6 +137,8 @@ onMounted(() => {
 
 .container {
   padding: 0 2rem;
+  margin: 6rem 3rem;
+  min-height: 60vh;
 }
 
 .table {

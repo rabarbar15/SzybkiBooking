@@ -186,6 +186,8 @@ const handleSubmit = () => {
     padding: 0 2rem;
     text-align: center;
     margin-bottom: 3rem ;
+    margin: 4rem 3rem;
+    min-height: 60vh;
 }
 
 .container h1 {

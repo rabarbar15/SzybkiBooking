@@ -200,6 +200,7 @@ onMounted(() => {
     padding: 4rem 2rem;
     text-align: center;
     min-height: 70vh;
+    margin: 3rem;
 }
 
 .container h1 {

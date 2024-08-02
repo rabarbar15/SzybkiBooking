@@ -24,6 +24,7 @@ export function retrieveAllRoomsDetails() {
 
   return new Promise((resolve, reject) => {
     const roomRef = ref(db, 'rooms');
+    
     onValue(roomRef, (snapshot) => {
       const roomsData = snapshot.val()
       resolve(roomsData)

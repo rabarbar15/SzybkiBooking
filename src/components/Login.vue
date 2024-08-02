@@ -66,6 +66,11 @@ const login = () =>{
             <p class="signup-link">Nie masz jeszcze konta? Zarejestruj się</p>
           </button> -->
       </v-card>
+      <v-card class="admin-passes">
+        <h2>Główne konto administratora:</h2>
+        <p style="font-size: 1.2rem;">Login: admin@gmail.com</p>
+        <p style="font-size: 1.2rem;">Hasło: Password123</p>
+      </v-card>
   </div>
 
   <v-snackbar
@@ -79,7 +84,7 @@ const login = () =>{
           variant="text"
           @click="snackbar = false"
         >
-          Close
+          Zamknij
         </v-btn>
       </template>
     </v-snackbar>
@@ -116,6 +121,10 @@ const login = () =>{
   padding: 0.7rem;
 }
 
+h2, h3 {
+  font-weight: 400;
+}
+
 input {
 
   background-color: rgba(128, 128, 128, 0.098);
@@ -130,6 +139,13 @@ input {
 
 h1 {
   font-weight: 300;
+}
+
+.admin-passes {
+  padding: 1rem;
+  width: 25vw;
+  margin: auto;
+  margin-top: 3rem;
 }
 
 .initials {
