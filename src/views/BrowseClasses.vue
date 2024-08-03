@@ -3,21 +3,44 @@
       <v-container class="container">
         <div class="content">
             <header>
-                <h1>Katalog sal</h1>
+                <h1 style="text-align: center;">Katalog sal</h1>
                 <br>
-                <div class="filter">
+                <div class="filter" v-if="!isMobile">
 
                     <p>Liczba miejsc</p>
-                    <input type="number" class="number-input" min="0" v-model="filterCapacityMin" placeholder="min">
-                    <input type="number" class="number-input" min="0" v-model="filterCapacityMax" placeholder="maks">
+                    <input type="number" class="number-input" min="0" v-model="filterCapacity[0]" placeholder="min">
+                    <input type="number" class="number-input" min="0" v-model="filterCapacity[1]" placeholder="maks">
 
                     <p style="padding-left: 1rem;">Sale komputerowe</p>
                     <input type="checkbox" class="check-input" v-model="filterComputer">
 
                 </div>
+
+                <div class="mobile-filter" v-else>
+
+                    <div class="computer-classes-filter">
+                        <h3>Sale komputerowe</h3>
+                        <input type="checkbox" class="check-input" v-model="filterComputer">
+                    </div>
+
+                    <br>
+
+                    <h3>Liczba miejsc</h3>
+                    <br>
+                    <!-- <input type="number" class="number-input-mobile" min="0" v-model="filterCapacityMin" placeholder="min">
+                    <input type="number" class="number-input-mobile" min="0" v-model="filterCapacityMax" placeholder="maks"> -->
+                    <v-range-slider
+                        step="1"
+                        thumb-label="always"
+                        strict
+                        :max="300"
+                        v-model="filterCapacity"
+                    ></v-range-slider>
+
+                </div>
             </header>
 
-            <v-table class="table">
+            <v-table class="table" v-if="!isMobile">
             <thead>
                 <tr>
                 <th>STREFA</th>
@@ -46,8 +69,40 @@
             </tbody>
             </v-table>
 
-            <v-dialog v-model="dialog" @keydown.esc="handleEscape">
-                <div>
+            <v-card class="list" v-else>
+    
+                <v-divider></v-divider>
+                <v-virtual-scroll
+                    :items="filteredRooms"
+                    height="40rem"
+                    item-height="48"
+                >
+                <template v-slot:default="{ item }">
+                    <v-list-item
+                      :subtitle="`Liczba miejsc: ${item.numberOfPlaces}`"
+                      :title="`${item.roomNumber}`"
+                    >
+                      <template v-slot:prepend>
+                        <v-icon v-if="!item.computers">mdi-book-open-variant</v-icon>
+                        <v-icon v-else>mdi mdi-laptop</v-icon>
+                      </template>
+            
+                      <template v-slot:append>
+                        <v-btn
+                          icon="mdi-notebook-edit"
+                          size="x-small"
+                          variant="tonal"
+    
+                          @click="openDialog(item)"
+                        ></v-btn>
+                      </template>
+                    </v-list-item>
+                  </template>
+                </v-virtual-scroll>
+
+            </v-card>
+
+            <v-dialog v-model="dialog" @keydown.esc="handleEscape" scrollable>
 
                 <v-card
                     class="mx-auto pt-4 text-left"
@@ -102,7 +157,7 @@
                         </div>
                     </v-card-actions>
             
-                <v-expand-transition>
+                <v-expand-transition scrollable>
                     <v-card
                     v-if="reveal"
                     class="position-absolute w-100 expand"
@@ -114,7 +169,7 @@
                     </button>
                     <v-card-text >
                         <h2>Masz problem?</h2>
-                        <span>Jeśli w wybranej sali coś się zepsuło bądź czegoś brakuje, <br> opisz problem, a my zajmiemy się nim natychmiast.</span>
+                        <span class="issue-info">Jeśli w wybranej sali coś się zepsuło bądź czegoś brakuje, <br> opisz problem, a my zajmiemy się nim natychmiast.</span>
                     </v-card-text>
 
                     <v-container fluid>
@@ -161,8 +216,6 @@
                     </v-card>
                 </v-expand-transition>
                 </v-card>
-
-                </div>
             </v-dialog>
         </div>
       </v-container>
@@ -186,13 +239,16 @@
   </template>
   
   <script >
-  import { reportIssue, retrieveAllRoomsDetails } from "../../data/database.js";    
+  import { reportIssue, retrieveAllRoomsDetails } from "../../data/database.js";
+  import { useDisplay } from 'vuetify';
+
     export default {
         data() {
             return {
                 rooms: [],
                 filterCapacityMin: '',
                 filterCapacityMax: '',
+                filterCapacity: [0, 300],
                 filterComputer: false,
                 dialog: false,
                 selectedRoom: {},
@@ -200,7 +256,8 @@
                 userEmail: "",
                 problemDescription: "",
                 snackbar: false,
-                snackbarMessage: ""
+                snackbarMessage: "",
+                isMobile: false 
             };
         },
         methods: {
@@ -243,12 +300,12 @@
             filteredRooms() {
                 let filtered = this.rooms;
 
-                if (this.filterCapacityMin) {
-                    filtered = filtered.filter(room => room.numberOfPlaces >= this.filterCapacityMin)
+                if (this.filterCapacity[0]) {
+                    filtered = filtered.filter(room => room.numberOfPlaces >= this.filterCapacity[0])
                 }
 
-                if (this.filterCapacityMax) {
-                    filtered = filtered.filter(room => room.numberOfPlaces <= this.filterCapacityMax);
+                if (this.filterCapacity[1]) {
+                    filtered = filtered.filter(room => room.numberOfPlaces <= this.filterCapacity[1]);
                 }
 
                 if (this.filterComputer) {
@@ -258,7 +315,10 @@
                 return filtered;
             }
         },
-        async mounted() {
+        mounted() {
+            const { mobile } = useDisplay();
+            this.isMobile = mobile.value
+
             retrieveAllRoomsDetails()
                 .then(roomsData => {
                     this.rooms = Object.values(roomsData)
@@ -271,135 +331,209 @@
     }
   </script>
   
-  <style scoped>
-  .elevation-1 {
+<style scoped>
+.elevation-1 {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  }
+}
 
-  header {
+header {
     padding: 0rem 0 1rem 0;
-  }
+}
 
-  .container {
+.container {
     padding: 3rem 0;
+}
 
-  }
-
-  h1 {
+h1 {
     font-weight: 400;
-  }
+}
 
-  .table {
+.table {
     border-radius: 4px;
     border: 1px solid rgba(128, 128, 128, 0.326);
-  }
+}
 
-  thead {
+thead {
     background-color: rgba(80, 88, 243, 0.79);
     color: white;
     font-weight: 600;
     font-size: 1.1rem;
-  }
+}
 
-  tbody tr:nth-child(even) {
+tbody tr:nth-child(even) {
     background-color: #f9f9f9; /* Light grey */
-  }
+}
 
-  .btn {
+.btn {
     font-size: 0.8rem;
-  }
+}
 
-  .filter {
+.filter {
     display: flex;
     gap: 0.6rem;
-  }
+}
 
-  .number-input {
+.mobile-filter {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.number-input {
     border: 1px solid rgba(128, 128, 128, 0.403);
     border-radius: 2px;
     padding: 0.2rem;
     width: 7%;
-  }
+}
 
-  .filter p {
+.filter p {
     font-size: 1.2rem;
-  }
+}
 
-  .check-input {
+.check-input {
     cursor: pointer;
-  }
+}
 
-  /* dialog */
-
-  .text-left {
+.text-left {
     text-align: left;
-    /* margin-top: 3rem; */
-
     border-radius: 10px;
     overflow: auto;
     min-height: 57vh;
-  }
+}
 
-    .header {
-        text-align: center;
-    }
+.header {
+    text-align: center;
+}
 
-    .arr-btn {
-        position: absolute;
-        left: 1rem;
-        top: 1rem;
-        /* border-radius: 50%; */
-        /* background: none; */
-        /* background-color: transparent; */
-        /* border: none; */
-    }
+.arr-btn {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+}
 
+.content {
+    width: 70vw;
+    margin: 0 auto;
+}
+
+.arr-btn:hover {
+    color: rgba(80, 88, 243, 0.79);
+}
+
+p {
+    line-height: 2.8rem;
+    font-size: 1.1rem;
+}
+
+.details {
+    padding: 2rem 3rem;
+
+}
+
+h1, h2 {
+    padding: 0.4rem 0;
+}
+
+h3 {
+    font-weight: 400;
+}
+
+hr {
+    margin: 0.6rem;
+    border-color: rgba(0, 0, 0, 0.191);
+}
+
+.buttons {
+    display: flex;
+    margin: 1rem;
+    justify-content: center;
+    gap: 10%;
+    width: 100%;
+}
+
+span {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: rgba(0, 0, 0, 0.545);
+}
+
+.expand {
+    padding: 2rem;
+    text-align: center;
+}
+
+.computer-classes-filter {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 0.7rem;
+}
+
+.check-input {
+    padding: 0.2rem;
+    width: 1em;
+    border: 2px solid black;
+}
+
+.list {
+    text-align: center;
+}
+
+
+@media screen and (max-width: 800px) {
     .content {
-        width: 70vw;
+        width: 90vw;
         margin: 0 auto;
     }
 
-    .arr-btn:hover {
-        color: rgba(80, 88, 243, 0.79);
-    }
-
-    p {
-        line-height: 2.8rem !important;
-        font-size: 1.1rem;
-    }
-
     .details {
-        padding: 2rem 3rem;
+        padding: 1rem 0;
     }
 
-    h1, h2 {
-        padding: 0.4rem 0;
+    .details li {
+        list-style-type: none;
+        line-height: 0.1rem;
     }
-
-    hr {
-        margin-bottom: 0.6rem;
+    
+    .details p {
+        line-height: 1.8rem;
+        font-size: 0.9rem;
     }
 
     .buttons {
         display: flex;
-        margin: 1rem;
-        justify-content: center;
-        gap: 10%;
-        width: 100%;
+        flex-direction: column;
+        gap: 0.4rem;
+        width: 60%;
+        margin: auto;
     }
 
-    span {
-        display: inline-block;
-        margin-top: 1rem;
-        font-size: 1.1rem;
-        font-style: italic;
-        color: rgba(0, 0, 0, 0.545);
+    .buttons .v-btn {
+        font-size: 0.8rem;
     }
 
-    .expand {
-        padding: 2rem;
-        text-align: center;
+    .issue-info {
+        font-size: 0.9rem;
     }
 
-  </style>
+    .v-dialog {
+        overflow-y: auto;
+        max-width: 100vw;
+        max-height: 100wh;
+    }
+    
+    .v-card {
+        max-height: 80vh; /* Adjust as needed */
+        overflow-y: auto;
+    }
+    
+    .v-card-text {
+        overflow-y: auto;
+    }
+
+}
+
+</style>
   
