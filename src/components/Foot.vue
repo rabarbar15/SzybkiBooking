@@ -1,11 +1,13 @@
 <script setup>
 import { useRouter } from 'vue-router';
+import { useDisplay } from 'vuetify'
 
+const { mobile } = useDisplay()
 const router = useRouter()
 </script>
 
 <template>
-    <v-footer class="footer bg-indigo-lighten-1 text-center d-flex flex-column">
+    <v-footer class="footer">
         <v-row style="width: 100%;">
             
             <v-col cols="3" class="links">
@@ -18,7 +20,7 @@ const router = useRouter()
                 </div>
             </v-col>
 
-            <v-col cols="3" class="nav">
+            <v-col cols="3" class="nav" v-if="!mobile">
                 <ul>
                     <li><a @click="router.push('/')">HOME</a></li>
                     <li><a @click="router.push('/classes')">SALE</a></li>
@@ -27,7 +29,7 @@ const router = useRouter()
             </v-col>
 
             <v-col cols="6" class="copyright">
-                <p>Copyright 2024 All Rights Reserved</p>
+                <p>2024 Kamil Piskorz</p>
             </v-col>
             
         </v-row>
@@ -38,6 +40,11 @@ const router = useRouter()
 
   .footer {
     padding: 4rem 25px 2rem 4rem;
+    background-color: #5C6BC0;
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
   }
 
   .links {
@@ -52,11 +59,6 @@ const router = useRouter()
     display: flex;
     gap: 1rem;
     padding: 1.5rem 0;
-  }
-
-  .svg-icon {
-    width: 24px;
-    height: 24px;
   }
 
   .nav {
@@ -83,6 +85,25 @@ const router = useRouter()
     align-content: end;
     text-align: right;
     padding: 1rem 7rem;
+  }
+
+  @media screen and (max-width: 800px) {
+    .footer {
+      padding: 2rem 2rem;
+    }
+    .copyright {
+      display: flex;
+      text-align: right;
+      margin-left: 2rem;
+      font-size: 0.8rem;
+      padding-left: 10rem;
+      padding-right: 0;
+    }
+
+    .links {
+      padding: 0;
+      text-align: left;
+    }
   }
 
 </style>

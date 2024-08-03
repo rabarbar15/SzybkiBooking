@@ -47,12 +47,12 @@ onMounted(() => {
       <v-divider />
 
       <v-list density="compact" nav>
-          <v-list-item class="link" prepend-icon="mdi-home" @click="router.push('/')">SzybkiBooking</v-list-item>
-          <v-list-item class="link" prepend-icon="mdi-home-analytics" @click="router.push('/admin-panel')">Panel</v-list-item>
-          <v-list-item class="link" prepend-icon="mdi-account" @click="router.push('/admin-account')">Moje konto</v-list-item>
-          <v-list-item class="link" prepend-icon="mdi-book" @click="router.push('/admin-reservations')">Rezerwacje</v-list-item>
-          <v-list-item class="link" prepend-icon="mdi-format-list-bulleted" @click="router.push('/admin-classes')">Sale</v-list-item>
-          <v-list-item class="link" prepend-icon="mdi-alert-circle-outline" @click="router.push('/admin-issues')">Zgłoszone usterki</v-list-item>
+          <v-list-item prepend-icon="mdi-home" @click="router.push('/')">SzybkiBooking</v-list-item>
+          <v-list-item prepend-icon="mdi-home-analytics" @click="router.push('/admin-panel')">Panel</v-list-item>
+          <v-list-item prepend-icon="mdi-account" @click="router.push('/admin-account')">Moje konto</v-list-item>
+          <v-list-item prepend-icon="mdi-book" @click="router.push('/admin-reservations')">Rezerwacje</v-list-item>
+          <v-list-item prepend-icon="mdi-format-list-bulleted" @click="router.push('/admin-classes')">Sale</v-list-item>
+          <v-list-item prepend-icon="mdi-alert-circle-outline" @click="router.push('/admin-issues')">Zgłoszone usterki</v-list-item>
       </v-list>
 
       <div class="logout-btn">
@@ -69,7 +69,7 @@ onMounted(() => {
     text-align: left;
 }
 
-.link {
+.v-list-item {
     text-decoration: none;
     color: white;
 }

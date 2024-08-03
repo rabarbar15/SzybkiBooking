@@ -130,6 +130,7 @@ export default {
           const calendarApi = this.$refs.calendarRef?.getApi();
           events.forEach(event => {
             const title = `${event.title} - ${event.person}`;
+            // console.log(event);
 
             if (event.status === 'PENDING') {
                 calendarApi.addEvent({
@@ -155,7 +156,14 @@ export default {
 
     async mounted() {
         try {
-            const events = getEvents(this.roomNumber);
+            const events = await getEvents(this.roomNumber);
+
+            if (events && events.length > 0) {
+                this.loadEvents(events);
+                console.log("Events loaded successfully");
+            } else {
+                console.log("No data available");
+            }
             
         } catch (error) {
             console.error("Error fetching events:", error);
@@ -211,8 +219,7 @@ export default {
 
     .container {
         min-height: 100%;
-
-    /* font-size: 14px; */
+        margin-top: 3rem;
     }
 
     .demo-app-main {

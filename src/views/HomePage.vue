@@ -1,3 +1,9 @@
+<script setup>
+import { useDisplay } from 'vuetify'
+
+const { mobile } = useDisplay()
+</script>
+
 <template>
   <v-container>
     <v-row class="page-content">
@@ -21,11 +27,14 @@
         <v-img
           src="https://img.freepik.com/darmowe-wektory/rezerwacja-terminu-ze-smartfonem_23-2148554312.jpg?t=st=1720153880~exp=1720157480~hmac=82e137942e40ce1772f3fc537e7f1ac3fdc3b8de9d9f5c1473a036a1bc3676de&w=1480"
           class="image"
+
         >
         </v-img>
       </v-col>
     </v-row>
+    
   </v-container>
+  
 
 </template>
 
@@ -76,6 +85,16 @@
   .image {
     max-width: 100%;
     height: auto;
+  }
+
+  @media screen and (max-width: 800px) {
+    .image {
+      display: none;
+    }
+
+    .text-content {
+      text-align: center;
+    }
   }
 
 </style>

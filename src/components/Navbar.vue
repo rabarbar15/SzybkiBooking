@@ -19,9 +19,7 @@
     </v-app-bar>
 </template>
 
-<script>
 
-</script>
 
 <style scoped>
   .navigation {
