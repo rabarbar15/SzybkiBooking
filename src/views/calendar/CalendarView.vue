@@ -8,6 +8,7 @@ import DialogModal from './DialogModal.vue'
 import { ref } from 'vue'
 import { getEvents } from '../../../data/calendarEvents'
 import { addReservation } from '../../../data/database'
+import { useDisplay } from 'vuetify'
 
 export default {
     components: {
@@ -51,12 +52,41 @@ export default {
                 eventOverlap: false,
                 selectOverlap: false,
             },
+            calendarOptionsMobile: {
+                plugins: [ dayGridPlugin, interactionPlugin, timeGridPlugin ],
+                headerToolbar: {
+                    left: 'prev,next',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridDay'
+                },
+                buttonText: {
+                    today: 'Dzisiaj',
+                    month: 'Miesiąc',
+                    day: 'Dzień',
+                },
+                locale: 'pl',
+                initialView: 'timeGridDay',
+                weekends: false,
+                selectable: true,
+                nowIndicator: true,
+                slotDuration: "00:15:00",
+                slotLabelInterval: "00:15:00",
+                selectMirror: true,
+                dateClick: this.handleDateClick,
+                select: this.handleDateSelect,
+                eventsSet: this.handleEvents,
+                allDaySlot: false,
+                allDayText: "",
+                expandRows: true,
+                eventOverlap: false,
+                selectOverlap: false,
+            },
             currentEvents: [],
             parentState: ref(false),
             formData: {},
             tmpArg: {},
-            roomInfo: null
-
+            roomInfo: null,
+            isMobile: false
         }
     },
 
@@ -155,6 +185,9 @@ export default {
     },
 
     async mounted() {
+        const { mobile } = useDisplay()
+        this.isMobile = mobile.value
+
         try {
             const events = await getEvents(this.roomNumber);
 
@@ -177,11 +210,13 @@ export default {
     <div class="container">
         <header>
             <h2>Plan zajęć odbywających się w sali {{ roomNumber }}</h2>
+            <br>
             <h3>W celu wykonania rezerwacji zaznacz obszar w kalendarzu.</h3>
         </header>
 
         <div class="calendar-container">
-            <FullCalendar class="calendar-content" :options="calendarOptions" ref="calendarRef"/>
+            <FullCalendar v-if="!isMobile" class="calendar-content" :options="calendarOptions" ref="calendarRef"/>
+            <FullCalendar v-else class="calendar-content" :options="calendarOptionsMobile" ref="calendarRef"/>
         </div>
 
         <DialogModal :childProp="parentState" v-on:changeDialogValue="updateDialogState" v-on:form-submitted="handleSubmition"/>
@@ -194,7 +229,6 @@ export default {
 
     header {
         padding-bottom: 2rem;
-
         text-align: left;
         max-width: 1100px;
         margin: 0 auto;
@@ -222,18 +256,30 @@ export default {
         margin-top: 3rem;
     }
 
-    .demo-app-main {
-        flex-grow: 1;
-        padding: 3em;
-    }
-
-    .fc { /* the calendar root */
+    .fc {
         max-width: 1100px;
         margin: 0 auto;
     }
 
     .calendar-content {
       width: 70vw;
+    }
+
+    @media screen and (max-width: 1000px) {
+        header {
+            text-align: center;
+            align-content: center;
+            width: 100%;
+        }
+
+        .calendar-content {
+            width: 90vw;
+            min-height: 150vh;
+        }
+
+        ::v-deep .fc .fc-toolbar-title   {
+            font-size: 3vw;
+        }
     }
 
 </style>

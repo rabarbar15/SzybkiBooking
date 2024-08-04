@@ -18,14 +18,8 @@
 
                 <div class="mobile-filter" v-else>
 
-                    <div class="computer-classes-filter">
-                        <h3>Sale komputerowe</h3>
-                        <input type="checkbox" class="check-input" v-model="filterComputer">
-                    </div>
-
-                    <br>
-
                     <h3>Liczba miejsc</h3>
+
                     <br>
                     <!-- <input type="number" class="number-input-mobile" min="0" v-model="filterCapacityMin" placeholder="min">
                     <input type="number" class="number-input-mobile" min="0" v-model="filterCapacityMax" placeholder="maks"> -->
@@ -36,6 +30,10 @@
                         :max="300"
                         v-model="filterCapacity"
                     ></v-range-slider>
+
+                    <div class="computer-classes-filter">
+                        <v-checkbox label="Sale komputerowe" v-model="filterComputer"></v-checkbox>
+                    </div>
 
                 </div>
             </header>
@@ -469,6 +467,7 @@ span {
     width: 100%;
     justify-content: center;
     gap: 0.7rem;
+    height: 3rem;
 }
 
 .check-input {
@@ -481,6 +480,9 @@ span {
     text-align: center;
 }
 
+.details {
+    min-width: 40vw;
+}
 
 @media screen and (max-width: 800px) {
     .content {

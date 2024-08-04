@@ -62,14 +62,11 @@ const login = () =>{
 
           <br>
 
-          <!-- <button @click="router.push('/signup')">
-            <p class="signup-link">Nie masz jeszcze konta? Zarejestruj się</p>
-          </button> -->
       </v-card>
       <v-card class="admin-passes">
         <h2>Główne konto administratora:</h2>
-        <p style="font-size: 1.2rem;">Login: admin@gmail.com</p>
-        <p style="font-size: 1.2rem;">Hasło: Password123</p>
+        <p>Login: admin@gmail.com</p>
+        <p>Hasło: Password123</p>
       </v-card>
   </div>
 
@@ -148,6 +145,10 @@ h1 {
   margin-top: 3rem;
 }
 
+.admin-passes p {
+  font-size: 1.2rem;
+}
+
 .initials {
   margin: auto;
   width: 5rem;
@@ -171,6 +172,28 @@ h1 {
 .signup-link {
   padding-top: 1.2rem;
   color: #303030af;
+}
+
+@media screen and (max-width: 800px) {
+  .container {
+    padding: 2rem;
+  }
+
+  .login-field {
+    width: 70vw;
+    margin: auto;
+    padding: 1rem 0.6rem;
+  }
+
+  .admin-passes {
+    width: 70vw;
+    margin-top: 1rem;
+    font-size: 0.7rem;
+  }
+
+  .admin-passes p {
+    font-size: 0.8rem;
+  }
 }
 
 </style>
