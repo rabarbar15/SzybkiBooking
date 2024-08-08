@@ -211,7 +211,8 @@ export default {
         <header>
             <h2>Plan zajęć odbywających się w sali {{ roomNumber }}</h2>
             <br>
-            <h3>W celu wykonania rezerwacji zaznacz obszar w kalendarzu.</h3>
+            <h3>W celu wykonania rezerwacji zaznacz obszar w kalendarzu i wypełnij formularz</h3>
+            <h3 class="info-mobile">(Jeśli korzystasz ze smartphona przytrzymaj wybraną godzinę 2-3 sekundy)</h3>
         </header>
 
         <div class="calendar-container">
@@ -229,7 +230,7 @@ export default {
 
     header {
         padding-bottom: 2rem;
-        text-align: left;
+        text-align: center;
         max-width: 1100px;
         margin: 0 auto;
     }
@@ -265,6 +266,10 @@ export default {
       width: 70vw;
     }
 
+    .info-mobile {
+        display: none;
+    }
+
     @media screen and (max-width: 1000px) {
         header {
             text-align: center;
@@ -280,6 +285,11 @@ export default {
         ::v-deep .fc .fc-toolbar-title   {
             font-size: 3vw;
         }
+
+        .info-mobile {
+            display: block;
+        }
+
     }
 
 </style>

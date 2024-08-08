@@ -1,12 +1,14 @@
 
 <template>
-  <v-app-bar class="navigation">
-    <v-toolbar-title class="title">SzybkiBooking</v-toolbar-title>
+  <v-app-bar class="navigation" scroll-behavior="hide elevate" scroll-threshold="1" color="grey-darken-4">
 
-    <a @click="drawer = !drawer" class="mdi mdi-hamburger"></a>
+    <v-toolbar-title class="title" @click="router.push('/')">SzybkiBooking</v-toolbar-title>
+    <a @click="drawer = !drawer" class="mdi mdi-hamburger" color="white"></a>
+
   </v-app-bar>
 
   <v-navigation-drawer
+    color="grey-darken-4"
     v-model="drawer"
     :location="$vuetify.display.mobile ? 'bottom' : 'right'"
     temporary

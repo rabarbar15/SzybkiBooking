@@ -5,7 +5,7 @@
       <v-card class="panel">
         
         <v-row>
-            <v-col cols="4">
+            <v-col cols="12" lg="4" md="6" sm="12">
 
                 <v-card class="tile-first-row" color="#FFF0F5">
                     <v-card-title class="initials"> {{ this.user ? this.user.email[0].toUpperCase() : '' }}</v-card-title >
@@ -16,7 +16,7 @@
 
             </v-col>
 
-            <v-col cols="4">
+            <v-col cols="12" lg="4" md="6" sm="12">
                 <v-card class="tile-first-row" color="#F8F8FF">
                     <v-card-title class="initials"><i class="mdi mdi-account-box-plus-outline"></i></v-card-title >
                     <v-card-title class="title">Dodaj nowe konto administratora</v-card-title>
@@ -24,7 +24,7 @@
                 </v-card>
             </v-col>
 
-            <v-col cols="4">
+            <v-col cols="12" lg="4" md="12" sm="12">
                 <v-card class="tile-first-row" color="#F0FFFF">
                     <v-card-title class="initials"><i class="mdi mdi-format-list-bulleted"></i></v-card-title >
                     <v-card-title class="title">Sale</v-card-title>
@@ -35,7 +35,7 @@
 
         </v-row>
         <v-row>
-            <v-col cols="6">
+            <v-col cols="12" lg="6" md="6" sm="12">
                 <v-card class="tile-second-row" color="#FFF8DC">
                     <v-card-title class="initials"><i class="mdi mdi-account-box-plus-outline"></i></v-card-title >
                     <v-card-title class="title">Rezerwacje</v-card-title>
@@ -45,7 +45,7 @@
                 </v-card>
             </v-col>
 
-            <v-col cols="6">
+            <v-col cols="12" lg="6" md="6" sm="12">
                 <v-card class="tile-second-row" color="#F0F8FF">
                     <v-card-title class="initials"><i class="mdi mdi-alert-circle-outline"></i></v-card-title >
                     <v-card-title class="title">Zgłoszenia</v-card-title>
@@ -56,10 +56,11 @@
             </v-col>
         </v-row>
 
-        <AdminSidebar />
-        
       </v-card>
+      
     </div>
+    <AdminSidebar />
+
   </template>
   
 <script>
@@ -132,12 +133,7 @@ export default {
 
 .panel {
     padding: 3rem;
-
     background-color: rgba(128, 128, 128, 0.075);
-}
-
-.sidebar-container {
-    background-color: rgba(0, 0, 0, 0.741);
 }
 
 .link {
@@ -173,7 +169,6 @@ h1 {
     padding-top: 1.5rem;
     margin: auto;
     margin-top: 2rem;
-
 }
 
 .title, .v-card-subtitle {
@@ -181,7 +176,6 @@ h1 {
     overflow-wrap: break-word;
     word-wrap: break-word;
 }
-
 
 .initials {
     margin: auto;
@@ -200,6 +194,24 @@ h1 {
 .edit-btn {
     font-size: 0.8rem;
     margin: 1rem 0;
+}
+
+@media screen and (max-width: 800px) {
+    .container {
+        margin: 0;
+        padding: 0;
+    }
+    .tile-first-row, .tile-second-row {
+        width: 13rem;
+        height: 16rem;
+    }
+
+    .v-snackbar {
+        width: 10vw;
+        margin: auto;
+        padding-bottom: 2rem;
+    }
+
 }
 
 </style>

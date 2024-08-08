@@ -159,10 +159,11 @@ const handleSubmit = () => {
                 style="margin: 4rem;"
             ></v-progress-circular>
 
-            <AdminSidebar />
         </v-card>
 
     </div>
+    <AdminSidebar />
+
     <v-snackbar
         v-model="snackbar"
     >
@@ -248,6 +249,23 @@ h1 {
     font-size: 0.8rem;
     margin: auto;
     text-align: center;
+}
+
+@media screen and (max-width: 800px) {
+    .container {
+        padding: 0;
+        padding-top: 1rem;
+        margin: 0;
+    }
+
+    .list {
+        width: 85vw;
+    }
+
+    .v-snackbar {
+        width: 50%;
+        margin: auto;
+    }
 }
 
 </style>

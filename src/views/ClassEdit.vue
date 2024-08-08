@@ -166,7 +166,6 @@ onMounted(() => {
                 style="margin: 4rem;"
             ></v-progress-circular>
 
-            <AdminSidebar />
         </v-card>
 
         <v-btn color="red" style="margin-top: 2rem;" @click="dialog=true">Usuń salę</v-btn>
@@ -195,6 +194,8 @@ onMounted(() => {
             </v-card>
         </v-dialog>
     </div>
+
+    <AdminSidebar />
 
     <v-snackbar
         v-model="snackbar"
@@ -285,6 +286,27 @@ h1 {
     height: 30vh;
     align-content: center;
     text-align: center;
+}
+
+@media screen and (max-width: 800px) {
+    .container {
+        padding: 1rem 0;
+        margin: 0;
+    }
+
+    .list {
+        width: 85vw;
+    }
+
+    .v-snackbar {
+        width: 10vw;
+        margin: auto;
+        padding-bottom: 2rem;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+    }
 }
 
 </style>

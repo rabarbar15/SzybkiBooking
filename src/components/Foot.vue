@@ -7,7 +7,7 @@ const router = useRouter()
 </script>
 
 <template>
-    <v-footer class="footer">
+    <v-footer class="footer" color="deep-orange-lighten-3">
         <v-row style="width: 100%;">
             
             <v-col cols="3" class="links">
@@ -40,7 +40,7 @@ const router = useRouter()
 
   .footer {
     padding: 4rem 25px 2rem 4rem;
-    background-color: #5C6BC0;
+
     color: white;
     text-align: center;
     display: flex;
@@ -75,7 +75,7 @@ const router = useRouter()
   
   a {
     text-decoration: none;
-    color: white;
+    color: black;
     font-weight: 500;
     cursor: pointer;
   }

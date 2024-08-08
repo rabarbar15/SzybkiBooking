@@ -52,10 +52,10 @@ const register = () =>{
 
 <template>
     <div class="container">
-        <h1>Utwórz nowe konto</h1>
 
         <v-card class="panel">
-            
+        <h1>Utwórz nowe konto</h1>
+
             <div class="form">
 
                 <div class="form-field">
@@ -76,9 +76,10 @@ const register = () =>{
 
             <v-btn class="edit-btn" @click="register">Zatwierdź</v-btn>
 
-            <AdminSidebar />
         </v-card>
     </div>
+    <AdminSidebar />
+
     <v-snackbar
         v-model="snackbar"
     >
@@ -144,24 +145,31 @@ h1 {
     font-weight: 400;
 }
 
-.initials {
-    margin: auto;
-    width: 5rem;
-    height: 5rem;
-    font-size: 32px;
-    background-color: #303030;
-    color: #fff;
-    display: flex;
-    align-self: center;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-}
-
 .edit-btn {
     font-size: 0.8rem;
     margin: auto;
     text-align: center;
+}
+
+@media screen and (max-width: 800px) {
+    .container {
+        padding: 1rem 0;
+        margin: 0;
+    }
+
+    .panel {
+        width: 75vw;
+    }
+
+    h1 {
+        font-size: 1.7rem;
+    }
+
+    .v-snackbar {
+        width: 10vw;
+        margin: auto;
+        padding-bottom: 2rem;
+    }
 }
 
 </style>

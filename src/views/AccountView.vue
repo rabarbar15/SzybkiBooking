@@ -27,7 +27,7 @@ const fetchCurrentUser = () => {
 
 const handleChangePassword = async () => {
     if (user.value.email === "admin@gmail.com") {
-        errMsg.value = "Niestety, nie można zmienić hasła głównego konta admin."
+        errMsg.value = "Nie można zmienić hasła głównego konta admin"
         snackbar.value = true
         return
     }
@@ -60,7 +60,7 @@ const handleChangePassword = async () => {
 
 const handleDeleteAccount = async () => {
     if (user.value.email === "admin@gmail.com") {
-        errMsg.value = "Niestety, głównego konta admin nie można usunąć."
+        errMsg.value = "Głównego konta admin nie można usunąć"
         snackbar.value = true
         dialog.value = false
         return
@@ -125,11 +125,10 @@ onMounted(() => {
             </div>
 
             <v-btn class="edit-btn" @click="handleChangePassword">Zatwierdź</v-btn>
+            <br>
+            <v-btn color="red" style="margin-top: 2rem" @click="dialog = true">Usuń moje konto</v-btn>
 
-            <AdminSidebar />
         </v-card>
-        <br>
-        <v-btn color="red" @click="dialog = true">Usuń moje konto</v-btn>
 
         <v-dialog
             v-model="dialog"
@@ -175,10 +174,11 @@ onMounted(() => {
         </v-card>
         </v-dialog>
     </div>
+    <AdminSidebar />
 
     <v-snackbar
-    v-model="snackbar"
-  >
+        v-model="snackbar"
+    >
     {{ errMsg }}
 
     <template v-slot:actions>
@@ -191,6 +191,7 @@ onMounted(() => {
       </v-btn>
     </template>
   </v-snackbar>
+
 </template>
   
 
@@ -259,9 +260,36 @@ h2, .v-card-title {
 .dialog-actions {
     display: flex;
     flex-direction: column;
-
 }
 
+@media screen and (max-width: 800px) {
+    .container {
+        margin: 0;
+        padding: 2rem 0;
+    }
+
+    .panel {
+        width: 70vw;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
+
+    .v-card-title {
+        font-size: 0.9rem;
+    }
+
+    label {
+        font-size: 0.9rem;
+    }
+
+    .v-snackbar {
+        width: 1vw;
+        margin: auto;
+        padding-bottom: 2rem;
+    }
+}
 
 </style>
   

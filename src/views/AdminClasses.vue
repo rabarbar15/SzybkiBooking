@@ -34,8 +34,8 @@
               </template>
             </v-virtual-scroll>
         
-            <AdminSidebar />
         </v-card>
+        <AdminSidebar />
 
     </div>
   </template>
@@ -140,6 +140,21 @@ h1 {
     font-size: 0.8rem;
     margin: auto;
     text-align: center;
+}
+
+@media screen and (max-width: 800px) {
+    .container {
+        margin: 0;
+        padding: 0;
+    }
+
+    .list {
+        width: 85vw;
+    }
+
+    .v-card-title {
+        font-size: 1rem;
+    }
 }
 
 </style>

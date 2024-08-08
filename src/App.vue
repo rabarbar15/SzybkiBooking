@@ -16,6 +16,7 @@ const { mobile } = useDisplay()
       <router-view class="container"></router-view>
       
     </v-main>
+    
     <Foot />
   </v-app>
 </template>

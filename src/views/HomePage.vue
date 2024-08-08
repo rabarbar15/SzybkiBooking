@@ -1,8 +1,3 @@
-<script setup>
-import { useDisplay } from 'vuetify'
-
-const { mobile } = useDisplay()
-</script>
 
 <template>
   <v-container>
@@ -12,31 +7,45 @@ const { mobile } = useDisplay()
           <h1>Wygodna rezerwacja sal w zasięgu ręki</h1>
           <h4>Zarezerwuj salę w kilku prostych krokach</h4>
 
-          <router-link to="classes">
-            <v-btn color="primary" variant="outlined" class="classes-btn">Przeglądaj dostępne sale<i class="pi pi-arrow-right"></i></v-btn>
-          </router-link>
+          <v-btn 
+            color="deep-orange-darken-3" 
+            variant="outlined" 
+            class="classes-btn"
+            @click="router.push('/classes')"
+          >
+            Przeglądaj dostępne sale<i class="pi pi-arrow-right"></i>
+          </v-btn>
 
-          <router-link to="admin-panel">
-            <v-btn color="indigo-darken-1" variant="tonal" class="classes-btn">Zarządzaj jako administrator<i class="pi pi-arrow-right"></i></v-btn>
-          </router-link>
+          <v-btn 
+            color="deep-orange-darken-3" 
+            variant="tonal" 
+            class="classes-btn"
+            @click="router.push('/admin-panel')"
+
+          >
+            Zarządzaj jako administrator<i class="pi pi-arrow-right"></i>
+          </v-btn>
 
         </div>
       </v-col>
 
       <v-col cols="12" md="6" class="d-flex align-center justify-center">
         <v-img
-          src="https://img.freepik.com/darmowe-wektory/rezerwacja-terminu-ze-smartfonem_23-2148554312.jpg?t=st=1720153880~exp=1720157480~hmac=82e137942e40ce1772f3fc537e7f1ac3fdc3b8de9d9f5c1473a036a1bc3676de&w=1480"
+          src="https://img.freepik.com/free-vector/appointment-booking-with-man-calendar_23-2148554943.jpg?t=st=1723040385~exp=1723043985~hmac=2814ed2bdc1800701caf52ea409b14771cb71f78fc054110473005ed36854548&w=1480"
           class="image"
 
         >
         </v-img>
       </v-col>
     </v-row>
-    
   </v-container>
-  
-
 </template>
+
+<script setup>
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
+</script>
 
 <style scoped>
 
@@ -94,6 +103,9 @@ const { mobile } = useDisplay()
 
     .text-content {
       text-align: center;
+    }
+    h1 {
+      font-size: 3rem;
     }
   }
 

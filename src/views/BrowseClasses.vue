@@ -9,6 +9,7 @@
 
                     <p>Liczba miejsc</p>
                     <input type="number" class="number-input" min="0" v-model="filterCapacity[0]" placeholder="min">
+                    <p>-</p>
                     <input type="number" class="number-input" min="0" v-model="filterCapacity[1]" placeholder="maks">
 
                     <p style="padding-left: 1rem;">Sale komputerowe</p>
@@ -39,32 +40,41 @@
             </header>
 
             <v-table class="table" v-if="!isMobile">
-            <thead>
-                <tr>
-                <th>STREFA</th>
-                <th>ULICA</th>
-                <th>NUMER SALI</th>
-                <th>MIEJSCA</th>
-                <th>KOMPUTEROWA</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(room, index) in filteredRooms" :key="index">
-                    <td>{{ room.zone }}</td>
-                    <td>{{ room.street }}</td>
+                <thead>
+                    <tr>
+                        <th>STREFA</th>
+                        <th>ULICA</th>
+                        <th>NUMER SALI</th>
+                        <th>MIEJSCA</th>
+                        <th>KOMPUTEROWA</th>
+                        <th></th>
+                    </tr>
+                </thead>
 
-                    <td>
-                        <v-btn text class="btn" @click="openDialog(room)">{{ room.roomNumber }}</v-btn>
-                    </td>
+                <tbody>
+                    <tr v-for="(room, index) in filteredRooms" :key="index">
+                        <td>{{ room.zone }}</td>
+                        <td>{{ room.street }}</td>
+                        <td>
+                            <v-btn text class="btn" @click="openDialog(room)">{{ room.roomNumber }}</v-btn>
+                        </td>
+                        <td>{{ room.numberOfPlaces }}</td>
+                        <td>{{ room.computers ? 'Tak' : 'Nie' }}</td>
+                        <td>
+                            <v-btn @click="() => {
+                                    this.selectedRoom = room;
+                                    goToCalendar()
+                                }"
+                                color="success"
+                            >
+                            Rezerwuj</v-btn>
+                        </td>
+                    </tr>
 
-                    <td>{{ room.numberOfPlaces }}</td>
-                    <td>{{ room.computers ? 'Tak' : 'Nie' }}</td>
-                </tr>
-
-                <tr v-if="filteredRooms.length === 0">
-                    <td colspan="8" class="text-center">Brak dostępnych sal spełniających kryteria.</td>
-                </tr>
-            </tbody>
+                    <tr v-if="filteredRooms.length === 0">
+                        <td colspan="8" class="text-center">Brak dostępnych sal spełniających kryteria.</td>
+                    </tr>
+                </tbody>
             </v-table>
 
             <v-card class="list" v-else>
@@ -157,10 +167,10 @@
             
                 <v-expand-transition scrollable>
                     <v-card
-                    v-if="reveal"
-                    class="position-absolute w-100 expand"
-                    height="100%"
-                    style="bottom: 0;"
+                        v-if="reveal"
+                        class="position-absolute w-100 expand"
+                        height="100%"
+                        style="bottom: 0;"
                     >
                     <button class="arr-btn" @click="closeDialog()">
                         <i class="pi pi-times"></i>
@@ -272,7 +282,6 @@
             },
 
             submitReport() {
-            // const roomNumber = this.roomDetails.roomNumber; 
             
             try {
                 if (!this.userEmail || !this.problemDescription) {
@@ -352,10 +361,10 @@ h1 {
 }
 
 thead {
-    background-color: rgba(80, 88, 243, 0.79);
     color: white;
     font-weight: 600;
     font-size: 1.1rem;
+    background-color: rgba(0, 0, 0, 0.768);
 }
 
 tbody tr:nth-child(even) {
@@ -425,7 +434,6 @@ p {
 
 .details {
     padding: 2rem 3rem;
-
 }
 
 h1, h2 {
@@ -510,6 +518,7 @@ span {
         gap: 0.4rem;
         width: 60%;
         margin: auto;
+        padding-bottom: 1rem;
     }
 
     .buttons .v-btn {

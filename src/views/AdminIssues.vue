@@ -2,14 +2,21 @@
 import { onMounted, ref } from 'vue';
 import { removeIssue, retrieveIssues } from '../../data/database';
 import AdminSidebar from '../components/AdminSidebar.vue';
+import { useDisplay } from 'vuetify';
 
 const issues = ref([])
 const currentItemId = ref("")
 const dialogDelete = ref(false)
 const expanded = ref([])
+const { mobile } = useDisplay()
 const headers = [
   { title: 'Użytkownik', key: 'userEmail', sortable: false },
   { title: 'Data', key: 'data', sortable: false },
+  { title: 'Sala', key: 'roomNumber', sortable: false  },
+  { title: 'Akcje', key: 'actions', sortable: false, align: 'center' },
+]
+
+const headersMobile = [
   { title: 'Sala', key: 'roomNumber', sortable: false  },
   { title: 'Akcje', key: 'actions', sortable: false, align: 'center' },
 ]
@@ -56,7 +63,7 @@ onMounted(() => {
         v-model:expanded="expanded"
         :items="issues"
         :item-value="issues.id"
-        :headers="headers"
+        :headers="mobile ? headersMobile : headers"
         show-expand
       >
       <template v-slot:expanded-row="{ columns, item }">
@@ -101,8 +108,8 @@ onMounted(() => {
         </v-card>
       </v-dialog>
 
-      <AdminSidebar />
     </v-card>
+    <AdminSidebar />
 
   </div>
 </template>
@@ -196,6 +203,18 @@ h1 {
 .success-btn {
   font-size: 0.8rem;
   margin: 0 1rem;
+}
+
+@media screen and (max-width: 800px) {
+  .container {
+    padding: 0;
+    margin: 0;
+  }
+  .v-snackbar {
+      width: 10vw;
+      margin: auto;
+      padding-bottom: 2rem;
+  }
 }
 
 </style>
