@@ -14,21 +14,21 @@ rezerwacjami, zgłoszonymi problemami, jak i samymi kontami. /
 * Vuetify   
 
 ## Features
-* **Browse classses**
+* **Browse available classses**
 
-* **Book a class**
+* **Book a class for chosen time with a calendar**
   
-* **Report an issue**
+* **Report an issue with a class**
 
 ## Admin features
   
 * **Edit and add new accounts**
   
-* **Approve and delete reservations**
+* **Approve and delete users' reservations**
   
-* **Edit and add classes**
+* **Add and edit classes**
   
-* **View and delete user issues**
+* **View and delete reported issues**
 
 ## Installation    
 
