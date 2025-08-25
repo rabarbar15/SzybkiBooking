@@ -4,7 +4,6 @@
       <v-card prepend-icon="pi pi-user-edit" title="Dokończ rezerwację">
         <v-card-text>
           <v-row dense>
-
             <v-col cols="12" md="6" sm="6">
               <v-text-field label="Imię*" v-model="firstName" required></v-text-field>
             </v-col>
@@ -14,7 +13,12 @@
             </v-col>
 
             <v-col cols="12" sm="12">
-              <v-text-field hint="rezerwacja będzie nosić nazwę podaną w tym polu" label="Prowadzony kurs*" v-model="course" required></v-text-field>
+              <v-text-field
+                hint="rezerwacja będzie nosić nazwę podaną w tym polu"
+                label="Prowadzony kurs*"
+                v-model="course"
+                required
+              ></v-text-field>
             </v-col>
           </v-row>
 
@@ -36,45 +40,50 @@
 </template>
 
 <script setup>
-  import { ref, defineProps, watch, defineEmits } from 'vue'
+import { ref, defineProps, watch, defineEmits } from 'vue';
 
-  const emit = defineEmits(['formSubmitted']);
+const emit = defineEmits(['formSubmitted']);
 
-  const props = defineProps({
-    childProp: Boolean 
-  });
-  
-  const dialog = ref(props.childProp)
+const props = defineProps({
+  childProp: Boolean,
+});
 
-  watch(() => props.childProp, (newValue) => {
+const dialog = ref(props.childProp);
+
+watch(
+  () => props.childProp,
+  (newValue) => {
     dialog.value = newValue;
-  });
+  },
+);
 
-  const firstName = ref('');
-  const lastName = ref('');
-  const course = ref('');
+const firstName = ref('');
+const lastName = ref('');
+const course = ref('');
 
-  const submitForm = () => {
+const submitForm = () => {
+  if (!firstName.value || !lastName.value || !course.value) {
+    alert('Wypełnij wszystkie pola.');
+    return;
+  }
 
-    if (!firstName.value || !lastName.value || !course.value) {
-      alert("Wypełnij wszystkie pola.")
-      return; 
-    }
+  console.log('Submitting form...');
+  console.log('First Name:', firstName.value);
+  console.log('Last Name:', lastName.value);
+  console.log('Course:', course.value);
 
-    console.log('Submitting form...');
-    console.log('First Name:', firstName.value);
-    console.log('Last Name:', lastName.value);
-    console.log('Course:', course.value);
-
-    const formData = { firstName: firstName.value, lastName: lastName.value, course: course.value };
-
-    emit('formSubmitted', formData);
-
-    dialog.value = false;
-    
-    firstName.value = ''
-    lastName.value = ''
-    course.value = ''
+  const formData = {
+    firstName: firstName.value,
+    lastName: lastName.value,
+    course: course.value,
   };
 
+  emit('formSubmitted', formData);
+
+  dialog.value = false;
+
+  firstName.value = '';
+  lastName.value = '';
+  course.value = '';
+};
 </script>

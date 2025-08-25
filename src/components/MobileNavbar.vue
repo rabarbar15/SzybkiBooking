@@ -1,10 +1,12 @@
-
 <template>
-  <v-app-bar class="navigation" scroll-behavior="hide elevate" scroll-threshold="1" color="grey-darken-4">
-
+  <v-app-bar
+    class="navigation"
+    scroll-behavior="hide elevate"
+    scroll-threshold="1"
+    color="grey-darken-4"
+  >
     <v-toolbar-title class="title" @click="router.push('/')">SzybkiBooking</v-toolbar-title>
     <a @click="drawer = !drawer" class="mdi mdi-hamburger" color="white"></a>
-
   </v-app-bar>
 
   <v-navigation-drawer
@@ -12,7 +14,7 @@
     v-model="drawer"
     :location="$vuetify.display.mobile ? 'bottom' : 'right'"
     temporary
-    style="text-align: center;"
+    style="text-align: center"
   >
     <!-- <v-list-item title="My Application" subtitle="Vuetify"></v-list-item>
     <v-divider></v-divider> -->
@@ -20,15 +22,14 @@
     <v-list-item @click="router.push('/classes')">SALE</v-list-item>
     <v-list-item @click="router.push('/admin-panel')">PANEL ADMINA</v-list-item>
   </v-navigation-drawer>
-  
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-const router = useRouter()
-const drawer = ref(false)
+const router = useRouter();
+const drawer = ref(false);
 </script>
 
 <style scoped>
@@ -59,5 +60,5 @@ a {
   text-decoration: none;
   font-size: 1.4rem;
   padding: 0.6rem 0;
-} 
+}
 </style>
